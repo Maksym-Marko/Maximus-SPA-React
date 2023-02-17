@@ -9,9 +9,25 @@ const Auth = API.injectEndpoints( {
                 method: 'POST',
                 body: { ...credentials }
             } )
-        } )
+        } ),
+        logout: builder.mutation( {
+            query: () => ( {
+                url: '/logout',
+                method: 'POST',
+                body: {}
+            } )
+        } ),
+        getUser: builder.query( {
+            query: () => '/user',
+        } ),
     } )
 
 } )
 
-export const { useLoginMutation } = Auth
+export default Auth
+
+export const { 
+    useLoginMutation,
+    useLogoutMutation,
+    useGetUserQuery
+ } = Auth

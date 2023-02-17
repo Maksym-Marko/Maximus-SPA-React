@@ -5,8 +5,6 @@ const RequiresGuest = () => {
 
     const user = useSelector( state => state.auth.token )
 
-    console.log( user )
-
     return (
         ! user ? <Outlet /> : <Navigate to='/' replace={true} />
     )

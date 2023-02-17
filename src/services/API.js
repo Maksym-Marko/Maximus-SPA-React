@@ -21,7 +21,7 @@ const baseQuery = fetchBaseQuery( {
 const handleResponse = async ( args, api, extraOptions ) => {
     let result = await baseQuery( args, api, extraOptions )
 
-    console.log( result )
+    // console.log( result )
 
     return result
 }

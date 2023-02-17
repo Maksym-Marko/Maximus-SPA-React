@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
+import { useGetUserQuery } from "@/services/Auth"
 
 // middlewares
 import RequiresGuest from "@/router/middlewares/RequiresGuest"
@@ -15,7 +16,7 @@ import Login from "@/pages/Login"
 import Register from "@/pages/Register"
 import Logout from "@/components/Logout"
 
-const router = createBrowserRouter([
+const router = createBrowserRouter( [
     {
       path: '/',
       element: <DefaultLayout />,

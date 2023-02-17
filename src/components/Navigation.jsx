@@ -52,13 +52,11 @@ function classNames(...classes) {
 
 const Navigation = () => {    
 
-    const user = useSelector( state => state.auth.token )
+    const user = useSelector( state => state.auth.user )
 
     const [uN, setUN] = useState([])
 
     useEffect( () => {
-
-        console.log('useeffect')
 
         setUN( prevUN => navPreparation( user, userNavigation ) ) 
     
@@ -102,40 +100,50 @@ const Navigation = () => {
                         </div>
                     </div>
                     <div className="hidden md:block">
-                        <div className="ml-4 flex items-center md:ml-6">                      
+                        <div className="ml-4 flex items-center md:ml-6">
 
-                        {/* Profile dropdown */}
-                        <Menu as="div" className="relative ml-3">
-                            <div>
-                            <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                <span className="sr-only">Open user menu</span>
-                                <img className="h-8 w-8 rounded-full" src={_user.imageUrl} alt="" />
-                            </Menu.Button>
-                            </div>
-                            <Transition
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                            >
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                {uN.map((item) => (
-                                    <NavLink 
-                                        key={item.name}
-                                        to={item.path}
-                                        className={ ( { isActive } ) => classNames(
-                                            isActive
-                                            ? 'block px-4 py-2 text-sm text-gray-700 bg-gray-100'
-                                            : 'block px-4 py-2 text-sm text-gray-700'
-                                        ) }
-                                    >
-                                        {item.label}
-                                    </NavLink>
-                                ))}
-                            </Menu.Items>
+                            {
+                                user ?
+                                <span 
+                                    className="text-white"
+                                >{user.name}</span> :
+                                <span 
+                                    className="text-white"
+                                >Hi, there! :)</span>
+                            }           
+
+                            {/* Profile dropdown */}
+                            <Menu as="div" className="relative ml-3">
+                                <div>
+                                <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                    <span className="sr-only">Open user menu</span>
+                                    <img className="h-8 w-8 rounded-full" src={_user.imageUrl} alt="" />
+                                </Menu.Button>
+                                </div>
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                >
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    {uN.map((item) => (
+                                        <NavLink 
+                                            key={item.name}
+                                            to={item.path}
+                                            className={ ( { isActive } ) => classNames(
+                                                isActive
+                                                ? 'block px-4 py-2 text-sm text-gray-700 bg-gray-100'
+                                                : 'block px-4 py-2 text-sm text-gray-700'
+                                            ) }
+                                        >
+                                            {item.label}
+                                        </NavLink>
+                                    ))}
+                                </Menu.Items>
                             </Transition>
                         </Menu>
                         </div>
@@ -183,13 +191,6 @@ const Navigation = () => {
                         <div className="text-base font-medium leading-none text-white">{user?.name}</div>
                         <div className="text-sm font-medium leading-none text-gray-400">{user?.email}</div>
                         </div>
-                        <button
-                        type="button"
-                        className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
-                        </button>
                     </div>
                     <div className="mt-3 space-y-1 px-2">
                         {uN.map((item) => (
@@ -197,7 +198,6 @@ const Navigation = () => {
                             <NavLink 
                                 key={item.name}
                                 to={item.path}
-                                onClick={() => console.log('Heading to /')}
                                 className={ ( { isActive } ) => classNames(
                                     isActive
                                     ? 'block rounded-md px-3 py-2 text-base font-medium text-gray-400 bg-gray-700 text-white'

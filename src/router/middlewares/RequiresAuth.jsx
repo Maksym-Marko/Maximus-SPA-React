@@ -5,8 +5,6 @@ const RequiresAuth = () => {
 
     const user = useSelector( state => state.auth.token )
 
-    console.log( user )
-
     return (
         user ? <Outlet /> : <Navigate to='/login' replace={true} />
     )

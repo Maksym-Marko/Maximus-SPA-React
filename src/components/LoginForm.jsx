@@ -3,7 +3,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useLoginMutation } from "@/services/Auth"
 import { useDispatch } from "react-redux"
-import { logIn } from "@/features/auth/authSlice"
+import { logIn } from "@/store/slices/auth/authSlice"
+import { setErrors, setMessages } from "@/store/slices/notify/notifySlice"
 
 const LoginForm = () => {
 
@@ -34,8 +35,20 @@ const LoginForm = () => {
         }
 
         // attempt to login
-        const user = await login( userData )
-        dispatch( logIn( user.data ) )
+        try {
+
+            const user = await login( userData ).unwrap()
+            dispatch( logIn( user ) )
+            dispatch( setMessages( 'Login succeeded' ) )
+            
+        } catch (error) {
+
+            dispatch( setErrors( {
+                'message': error.data.error
+            } ) )
+            
+        }
+        
 
     }
 
@@ -118,13 +131,15 @@ const LoginForm = () => {
 
                 <div>
                 <button
-                    type="submit"
+                    type={!isLoading ? 'submit' : 'button'}
+                    disabled={isLoading}
                     className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-                    </span>
-                    Sign in
+                    { isLoading && <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                    </span> }
+                    
+                    {isLoading ? 'Signing in ...' : 'Sign in'}
                 </button>
                 </div>
             </form>
