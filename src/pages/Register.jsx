@@ -1,6 +1,8 @@
+import RegisterForm from "@/components/RegisterForm"
+
 const Register = () => {
     return (
-        <>Register</>
+        <RegisterForm />
     )
 }
 

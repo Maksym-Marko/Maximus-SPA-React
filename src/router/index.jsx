@@ -4,6 +4,7 @@ import { useGetUserQuery } from "@/services/Auth"
 // middlewares
 import RequiresGuest from "@/router/middlewares/RequiresGuest"
 import RequiresAuth from "@/router/middlewares/RequiresAuth"
+import RequiresEmailVerification from "./middlewares/RequiresEmailVerification"
 
 // Layouts
 import DefaultLayout from "@/components/DefaultLayout"
@@ -15,6 +16,9 @@ import About from "@/pages/About"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
 import Logout from "@/components/Logout"
+import Dashboard from "@/pages/Dashboard"
+import VerifyEmail from "@/pages/VerifyEmail"
+import VerifyEmailCheck from "@/pages/VerifyEmailCheck"
 
 const router = createBrowserRouter( [
     {
@@ -42,11 +46,25 @@ const router = createBrowserRouter( [
         {
           element: <RequiresAuth />,
           children: [
+            // Email verified area
+            {
+              element: <RequiresEmailVerification />,
+              children: [                
+                {
+                  path: 'dashboard',
+                  element: <Dashboard />
+                },
+              ]
+            },
+
+            {
+              path: '/verify-email',
+              element: <VerifyEmail />
+            },
             {
               path: 'logout',
               element: <Logout />
-            }
-
+            },          
           ]
         },
 
@@ -59,7 +77,11 @@ const router = createBrowserRouter( [
           path: 'about',
           element: <About />,
         },
-
+        // Email verification Check
+        {
+          path: '/verify-email-check',
+          element: <VerifyEmailCheck />
+        },
 
         {
           path: '*',

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { logOut } from "@/store/slices/auth/authSlice"
+import { destroyCredentials } from "@/store/slices/auth/authSlice"
 import { useEffect } from "react"
 import { useLogoutMutation } from "@/services/Auth"
 import { setMessages } from "@/store/slices/notify/notifySlice"
@@ -24,7 +24,7 @@ const Logout = () => {
 
             } )()
 
-            dispatch( logOut() )
+            dispatch( destroyCredentials() )
             dispatch( setMessages( 'See you!' ) )
 
             tokenKey = token

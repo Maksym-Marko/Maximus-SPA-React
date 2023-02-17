@@ -9,6 +9,13 @@ const authSlice = createSlice( {
     name: 'auth',
     initialState,
     reducers: {
+        setEmaiVerifiedDate: ( state, action ) => {
+
+            if( ! action.payload ) return
+
+            state.user.emailVerifiedAt = action.payload
+
+        },
         setUser: ( state, action ) => {
 
             if( ! action.payload ) return
@@ -16,7 +23,7 @@ const authSlice = createSlice( {
             const { data } = action.payload
             state.user = data
         },
-        logIn: ( state, action ) => {
+        setCredentials: ( state, action ) => {
             
             if( ! action.payload ) return
 
@@ -26,7 +33,7 @@ const authSlice = createSlice( {
             localStorage.setItem( 'TOKEN', token )
 
         },
-        logOut: ( state, action ) => {
+        destroyCredentials: ( state, action ) => {
             state.user = null
             state.token = null
             localStorage.removeItem( 'TOKEN' )
@@ -35,6 +42,11 @@ const authSlice = createSlice( {
 
 } )
 
-export const { setUser, logIn, logOut } = authSlice.actions
+export const {
+    setEmaiVerifiedDate,
+    setUser,
+    setCredentials,
+    destroyCredentials
+} = authSlice.actions
 
 export default authSlice.reducer

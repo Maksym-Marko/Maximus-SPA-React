@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useLoginMutation } from "@/services/Auth"
 import { useDispatch } from "react-redux"
-import { logIn } from "@/store/slices/auth/authSlice"
+import { setCredentials } from "@/store/slices/auth/authSlice"
 import { setErrors, setMessages } from "@/store/slices/notify/notifySlice"
 
 const LoginForm = () => {
@@ -29,6 +29,8 @@ const LoginForm = () => {
 
         e.preventDefault()
 
+        if( isLoading ) return
+
         if( ! userData.email || ! userData.password ) {
             console.log( 'Please, fill in data' )
             return 
@@ -38,17 +40,16 @@ const LoginForm = () => {
         try {
 
             const user = await login( userData ).unwrap()
-            dispatch( logIn( user ) )
+            dispatch( setCredentials( user ) )
             dispatch( setMessages( 'Login succeeded' ) )
             
         } catch (error) {
-
+            
             dispatch( setErrors( {
                 'message': error.data.error
             } ) )
             
         }
-        
 
     }
 

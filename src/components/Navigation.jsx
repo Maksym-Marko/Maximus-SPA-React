@@ -17,7 +17,8 @@ const navigation = [
 const userNavigation = [
     { name: 'Register', path: '/register', label: 'Register', reqGuest: true },
     { name: 'Login', path: '/login', label: 'Login', reqGuest: true },
-    { name: 'Logout', path: '/logout', label: 'Logout', reqAuth: true, callback: () => 'some' },
+    { name: 'Dashboard', path: '/dashboard', label: 'Dashboard', reqAuth: true },
+    { name: 'Logout', path: '/logout', label: 'Logout', reqAuth: true },    
 ]
 
 const navPreparation = ( auth, origin ) => {

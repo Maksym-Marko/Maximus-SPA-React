@@ -1,8 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
-import { useEffect, useState } from "react"
-
-// todo
-import { setMessages, setErrors, clearErrors, clearMessages } from "@/store/slices/notify/notifySlice"
+import { useEffect } from "react"
+import { clearErrors, clearMessages } from "@/store/slices/notify/notifySlice"
 
 const expTime = {
     messageTime: null,
@@ -26,7 +24,7 @@ const FlashMessages = () => {
 
             dispatch( clearMessages() )
 
-        }, 2000 )
+        }, 6000 )
 
     }
 
@@ -52,11 +50,7 @@ const FlashMessages = () => {
     }, [messages, errors] )
 
     return (
-        <>
-
-            <button onClick={ () => dispatch( setMessages( 'message' ) ) }>Add message</button>
-            <button onClick={ () => dispatch( setErrors( {'message': 'Credentials incorrect'} ) ) }>Add error</button>
-
+        <>        
             {
                 messages.length>0 || ( errors.length>0 ) ?
                 <div

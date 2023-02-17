@@ -3,13 +3,12 @@ import Navigation from "@/components/Navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useGetUserQuery } from "@/services/Auth"
-import { setUser, logOut } from "@/store/slices/auth/authSlice"
+import { setUser, destroyCredentials } from "@/store/slices/auth/authSlice"
 import FlashMessages from "./FlashMessages"
 
 const DefaultLayout = () => {
 
     const dispatch = useDispatch()
-    const user = useSelector( state => state.auth.user )
     const token = useSelector( state => state.auth.token )
 
     const {
@@ -29,7 +28,7 @@ const DefaultLayout = () => {
 
             if( isSuccess ) dispatch( setUser( data ) )
 
-            if( isError ) dispatch( logOut() )
+            if( isError ) dispatch( destroyCredentials() )
 
         }
 
