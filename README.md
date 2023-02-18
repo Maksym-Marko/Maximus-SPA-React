@@ -38,6 +38,9 @@ If you want to check email verification feature, you must use a real email addre
 
 You can use Maximus API on your local PC and customize it. Please find Maximus API here: https://github.com/Maxim-us/Laravel-Vue3-Breeze
 
+###### Vue.js version:
+https://github.com/Maxim-us/Maximus-SPA-Vue
+
 ###### Inspired by:
-https://github.com/iamshaunjp
-https://github.com/gitdagray
+- https://github.com/iamshaunjp
+- https://github.com/gitdagray
