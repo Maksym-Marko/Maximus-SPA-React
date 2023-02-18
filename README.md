@@ -11,7 +11,7 @@ Maximus SPA React is a starter kit for React.js Single Page Application (SPA) ht
 - Reset Password
 
 #### Installation:
-0. `git clone git@github.com:Maxim-us/Maximus-SPA-React.git`
+0. `git clone https://github.com/Maxim-us/Maximus-SPA-React.git`
 
 1. `cd Maximus-SPA-React`
 
