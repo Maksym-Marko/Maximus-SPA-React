@@ -1,7 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useRegisterMutation } from "@/services/Auth"
+import { useRegisterMutation, useEmailVerSendMutation } from "@/services/Auth"
 import { useDispatch } from "react-redux"
 import { setCredentials } from "@/store/slices/auth/authSlice"
 import { setErrors, setMessages } from "@/store/slices/notify/notifySlice"
@@ -9,7 +9,8 @@ import { setErrors, setMessages } from "@/store/slices/notify/notifySlice"
 const RegisterForm = () => {
 
     const [register, { isLoading }] = useRegisterMutation()
-    const dispatch = useDispatch()  
+    const dispatch = useDispatch()
+    const [emailVerSend] = useEmailVerSendMutation()
 
     const [userData, setUserData] = useState( {
         name: null,
@@ -36,26 +37,48 @@ const RegisterForm = () => {
             return 
         }
 
-        // attempt to login
+        // attempt to register
         try {
 
             const user = await register( userData ).unwrap()
             dispatch( setCredentials( user ) )
-            dispatch( setMessages( 'Registration succeeded' ) )
+            dispatch( setMessages( 'Registration succeeded.' ) )
+
+            if( import.meta.env.VITE_EMAIL_VERIFICATION === 'true' ) {
+
+                const send = await emailVerSend().unwrap()
+
+                if( send?.message === 'success' ) {
+
+                    dispatch( setMessages( 'Verification email sent successfully.' ) )
+
+                }
+
+            }
             
-        } catch (error) {
-            
-            dispatch( setErrors( {
-                'message': error.data.message
-            } ) )
+        } catch ( error ) {
+
+            if( error?.data?.message ) {
+
+                dispatch( setErrors( {
+                    'message': error.data.message
+                } ) )
+
+            } else {
+
+                dispatch( setErrors( {
+                    'message': 'Something went wrong!'
+                } ) )
+
+            }
             
         }
 
     }
 
     return (
-        <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
+    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8">
             <div>
                 <img
                     className="mx-auto h-12 w-auto"
@@ -68,7 +91,10 @@ const RegisterForm = () => {
                 <p className="mt-2 text-center text-sm text-gray-600">
                     Or{' '}
 
-                    <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Login now</Link>
+                    <Link 
+                        to="/login" 
+                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                    >Login now</Link>
                 </p>
             </div>
             <form
@@ -143,43 +169,22 @@ const RegisterForm = () => {
 
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                        <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                        Remember me
-                        </label>
-                    </div>
-
-                    <div className="text-sm">
-                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                        Forgot your password?
-                        </a>
-                    </div>
-
-                </div>
-
                 <div>
-                <button
-                    type={!isLoading ? 'submit' : 'button'}
-                    disabled={isLoading}
-                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    { isLoading && <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-                    </span> }
-                    
-                    {isLoading ? 'Register ...' : 'Register'}
-                </button>
+                    <button
+                        type={!isLoading ? 'submit' : 'button'}
+                        disabled={isLoading}
+                        className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        { isLoading && <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                        </span> }
+                        
+                        {isLoading ? 'Register ...' : 'Register'}
+                    </button>
                 </div>
             </form>
-            </div>
         </div>
+    </div>
     )
 }
 

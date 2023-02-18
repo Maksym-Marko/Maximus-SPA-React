@@ -6,8 +6,7 @@ const VerifyEmail = () => {
 
     const user = useSelector( state => state.auth.user )
 
-    return (
-        ( user?.emailVerifiedAt ) ?
+    return ( ( user?.emailVerifiedAt ) ?
         <Navigate to="/dashboard" replace={true} /> :
         <VerificationEmailForm />
     )

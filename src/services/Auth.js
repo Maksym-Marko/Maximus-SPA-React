@@ -3,6 +3,23 @@ import API from "@/services/API"
 const Auth = API.injectEndpoints( {
 
     endpoints: builder => ( {
+        resetPassword: builder.mutation( {
+            query: credentials => ( {
+                url: '/reset-password',
+                method: 'POST',
+                body: { ...credentials }
+            } )
+        } ),
+        forgotPasswordSend: builder.mutation( {
+            query: credentials => ( {
+                url: '/forgot-password',
+                method: 'POST',
+                body: { 
+                    ...credentials,
+                    resetPasswordUrl: import.meta.env.VITE_RESET_PASSWORD_BASE_URL,
+                }
+            } )
+        } ),
         emailVerCheck: builder.mutation( {
             query: credentials => ( {
                 url: '/send-email-verification-check',
@@ -49,7 +66,9 @@ const Auth = API.injectEndpoints( {
 
 export default Auth
 
-export const { 
+export const {
+    useResetPasswordMutation,
+    useForgotPasswordSendMutation,
     useEmailVerCheckMutation,
     useEmailVerSendMutation,
     useRegisterMutation,

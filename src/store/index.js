@@ -12,7 +12,7 @@ const store = configureStore( {
         "system/verify": verifySliceReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat( API.middleware ),
-    devTools: true
+    devTools: (import.meta.env.VITE_DEBUG_MODE === 'true')
 } )
 
 export default store

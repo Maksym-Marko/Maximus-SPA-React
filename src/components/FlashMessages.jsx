@@ -38,7 +38,7 @@ const FlashMessages = () => {
 
             dispatch( clearErrors() )
 
-        }, 2000 )
+        }, 6000 )
 
     }
 
@@ -49,49 +49,44 @@ const FlashMessages = () => {
 
     }, [messages, errors] )
 
-    return (
-        <>        
-            {
-                messages.length>0 || ( errors.length>0 ) ?
-                <div
-                    style={ {
-                        position: 'fixed',
-                        right: '20px',
-                        bottom: '20px'    
-                    } }   
-                >
+    return ( messages.length>0 || ( errors.length>0 ) ?
+        <div
+            style={ {
+                position: 'fixed',
+                right: '20px',
+                bottom: '20px'    
+            } }   
+        >
 
-                    <div                                
-                        className="fixed bottom-2 right-2"
-                    >
+            <div                                
+                className="fixed bottom-2 right-2"
+            >
 
-                        {
-                            messages.length>0 &&                        
-                            messages.map( ( message, index ) => (                            
-                                <p
-                                    key={index}
-                                    className="p-5 mb-2 bg-green-200 rounded max-w-xs text-green-900"
-                                >{ message }</p>
-                            ) )                 
-                        }
+                {
+                    messages.length>0 &&                        
+                    messages.map( ( message, index ) => (                            
+                        <p
+                            key={index}
+                            className="p-5 mb-2 bg-green-200 rounded max-w-xs text-green-900"
+                        >{ message }</p>
+                    ) )                 
+                }
 
-                        {
-                            errors.length>0 &&
-                            errors.map( ( error, index ) => (
-                                <p
-                                    key={index}
-                                    className="p-5 mb-2 bg-red-200 rounded max-w-xs text-red-900"
-                                >{ error.message }</p>
-                            ) )
+                {
+                    errors.length>0 &&
+                    errors.map( ( error, index ) => (
+                        <p
+                            key={index}
+                            className="p-5 mb-2 bg-red-200 rounded max-w-xs text-red-900"
+                        >{ error.message }</p>
+                    ) )
 
-                        }
+                }
 
-                    </div>
+            </div>
 
-                </div> :
-                ''
-            }
-        </>
+        </div> :
+        ''
     )
 }
 

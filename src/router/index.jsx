@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom"
-import { useGetUserQuery } from "@/services/Auth"
 
 // middlewares
 import RequiresGuest from "@/router/middlewares/RequiresGuest"
@@ -19,6 +18,8 @@ import Logout from "@/components/Logout"
 import Dashboard from "@/pages/Dashboard"
 import VerifyEmail from "@/pages/VerifyEmail"
 import VerifyEmailCheck from "@/pages/VerifyEmailCheck"
+import ForgotPassword from "@/pages/ForgotPassword"
+import ResetPassword from "@/pages/ResetPassword"
 
 const router = createBrowserRouter( [
     {
@@ -38,7 +39,15 @@ const router = createBrowserRouter( [
             {
               path: 'register',
               element: <Register />
-            },            
+            },
+            {
+              path: 'forgot-password',
+              element: <ForgotPassword />
+            },
+            {
+              path: 'reset-password',
+              element: <ResetPassword />
+            },
           ]
         },
 

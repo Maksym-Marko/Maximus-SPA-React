@@ -25,7 +25,7 @@ const Logout = () => {
             } )()
 
             dispatch( destroyCredentials() )
-            dispatch( setMessages( 'See you!' ) )
+            dispatch( setMessages( 'See you soon!' ) )
 
             tokenKey = token
         
