@@ -17,7 +17,7 @@ Maximus SPA React is a starter kit for React.js Single Page Application (SPA) ht
 
 2. `npm install`
 
-3. `npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch`
+3. `npx tailwindcss -i ./src/index.css -o ./dist/output.css --watch`
 
 4. `CTRL + C` ( to stop tailwindcss server or open a new terminal )
 
